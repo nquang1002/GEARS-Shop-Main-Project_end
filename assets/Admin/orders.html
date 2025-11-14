@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="shortcut icon" href="../img/ShortCut_Icon.png">
+    <link rel="stylesheet" href="../css/Base.css">
+    <link rel="stylesheet" href="../css/Grid.css">
+    <link rel="stylesheet" href="../css/Responsive.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Quản lý Đơn hàng - GEARS Shop</title>
+</head>
+<body>
+    <div class="main-body">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-navbar--list">
+                <div class="header-navbar--item">
+                    <a href="dashboard.html" style="color: inherit; text-decoration: none;">Trang chủ</a>
+                </div>
+                <div class="header-navbar--item">
+                    <a href="customers.html" style="color: inherit; text-decoration: none;">Quản lý khách hàng</a>
+                </div>
+                <div class="header-navbar--item">
+                    <a href="products.html" style="color: inherit; text-decoration: none;">Quản lý sản phẩm</a>
+                </div>
+                <div class="header-navbar--item headerActive">
+                    <a href="orders.html" style="color: inherit; text-decoration: none;">Quản lý đơn hàng</a>
+                </div>
+                <div class="line"></div>
+            </div>
+        </div>
+
+        <!-- Container -->
+        <div class="container">
+            <div class="grid max-Width">
+                <div class="row sm-gutter">
+                    <div class="col l-12 m-12 c-12">
+                        <div class="container-main">
+                            <div class="container-title">Quản lý Đơn hàng</div>
+                            
+                            <!-- Thanh lọc -->
+                            <div class="search-bar" style="margin-bottom: 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                                <label>Từ ngày:</label>
+                                <input type="date" id="filter-start-date" class="input-field" style="width: 150px;">
+                                
+                                <label>Đến ngày:</label>
+                                <input type="date" id="filter-end-date" class="input-field" style="width: 150px;">
+                                
+                                <label>Tình trạng:</label>
+                                <select id="filter-status" class="input-field" style="width: 150px;">
+                                    <option value="">Tất cả</option>
+                                    <option value="moi">Mới đặt</option>
+                                    <option value="xuly">Đã xử lý</option>
+                                    <option value="giaohang">Đã giao</option>
+                                    <option value="huy">Huỷ</option>
+                                </select>
+                                
+                                <input type="text" id="search-customer-name" placeholder="Tìm theo tên khách hàng..." 
+                                    class="input-field" style="flex: 1; max-width: 250px;">
+                                
+                                <button id="btn-filter-orders" class="confirm-btn">Lọc</button>
+                                <button id="btn-reset-orders" class="confirm-btn" style="background: #999;">Reset</button>
+                            </div>
+
+                            <!-- Bảng danh sách -->
+                            <div class="container-table" style="max-height: 60vh;">
+                                <table id="orders-list"></table>
+                            </div>
+
+                            <!-- Phân trang -->
+                            <div class="pagination" id="pagination-orders" style="display: flex; justify-content: center; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
+                            </div>
+
+                            <!-- Thông tin trang -->
+                            <div class="page-info" style="text-align: center; margin-top: 10px; color: #666;">
+                                Hiển thị <span id="showing-start">0</span> - <span id="showing-end">0</span> 
+                                trong tổng số <span id="total-orders">0</span> đơn hàng
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal xem chi tiết đơn hàng -->
+    <div class="OrderDetail_Wrap" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div class="Add_Product_main" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
+            <div class="Add_Product_header">Chi tiết đơn hàng</div>
+            <div class="reg-btn__close js-close-order-detail">
+                <i class="fas fa-times"></i>
+            </div>
+            <div id="order-detail-content" style="padding: 20px;">
+            </div>
+        </div>
+    </div>
+
+    <script src="./script/admin-common.js"></script>
+    <script src="./script/orders.js"></script>
+</body>
+</html>

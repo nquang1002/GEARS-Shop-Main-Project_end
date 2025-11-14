@@ -1,0 +1,566 @@
+.grid.max-Width {
+       max-width: 100% !important; /* Không giới hạn max-width */
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.header {
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: var(--heade-height);
+    box-shadow: 0 2px 12px #ccc;
+    z-index: 999;
+}
+
+.header-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.header-logo {
+    font-size: 1.9rem;
+    line-height: var(--heade-height);
+    color: var(--text-color);
+    font-weight: 500;
+    cursor: default;
+}
+
+.header-btn--out {
+    position: absolute;
+    right: 10%;
+    background-color: #ffa310;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 3rem;
+    width: 120px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px #8f8f8f;
+}
+
+.header-btn--out a {
+    color: white;
+    transition: all 0.3s;
+}
+
+.header-btn--out a:hover {
+    background-color: white;
+    color: #ffa310;
+}
+
+.container {
+    margin-top: var(--heade-height);
+    min-height: 1200px;
+   
+     padding-top: 0 !important;
+}
+
+.container-main {
+    padding: 12px 12px 20px;
+    background-color: #e1e1e1;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+
+.container-title {
+    font-size: 2.3rem;
+    line-height: initial;
+    text-align: center;
+    padding: 20px 0px;
+    font-weight: 600;
+}
+
+.container-table {
+    max-height: 40vh;
+    overflow: auto;
+}
+
+.container-img {
+    width: 120px;
+    border: 1px solid #ccc;
+    object-fit: contain;
+}
+
+/* table  */
+#userlist,
+#productlist,
+#confirm-order,
+#product-list {
+    width: 100%;
+    font-size: 1.6rem;
+    text-align: center;
+    background: white;
+    padding: 16px 0;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    font-weight: 500;
+}
+
+#product-list td {
+    padding: 12px 32px;
+}
+
+th {
+    padding: 0 12px 4px;
+}
+
+.delete,
+.fix,
+.apply {
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #424242;
+    transition: all 0.15s;
+    margin: 4px 0;
+    border: none;
+}
+
+.delete:hover,
+.fix:hover,
+.apply:hover {
+    background-color: rgb(90, 90, 90);
+    color: white;
+}
+
+.btn_Admin {
+    display: flex;
+    justify-content: flex-end;
+    align-content: center;
+    margin-top: 16px;
+    margin-right: 16px;
+}
+
+.btn-Product {
+    background-color: #ffa310;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 3rem;
+    color: white;
+    right: 0;
+    top: 0;
+    padding: 0 8px;
+    margin: 0 4px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px #8f8f8f;
+    transition: all 0.2s;
+}
+
+.btn-Product:hover {
+    cursor: pointer;
+    background-color: white;
+    color: #ffa310;
+}
+
+.AddProduct_Wrap,
+.AddTypeProduct_Wrap,
+.EditTypeProduct_Wrap,
+.DelTypeProduct_Wrap,
+.AddImport_Wrap,
+.EditImport_Wrap,
+.ChangeProduct_Wrap,
+.OrderDetail_Wrap,
+.EditPrice_Wrap,
+.AddPrice_Wrap,
+.ConfirmListCart_Wrap {
+    position: fixed;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.15);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transform: scale(1.35);
+}
+
+@keyframes AP_FadeIn {
+    from {
+        opacity: 0.7;
+        transform: translateY(-16%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.Add_Product_main,
+.AddType_Product_main,
+.Change_Product_main,
+.ConfirmListCart_main {
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+    border-radius: 8px;
+    padding: 12px 32px;
+    box-shadow: 0 0 0 8px rgb(255 255 255 / 20%);
+    max-width: calc(100% - 32px);
+    transition: all 0.3s;
+    animation: AP_FadeIn ease 0.4s;
+}
+
+.Add_Product_header,
+.AddType_Product_header,
+.Change_Product_header,
+.ConfirmListCart_header {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 12px 0;
+}
+
+.AP-container--item,
+.change-container--item {
+    padding-bottom: 12px;
+}
+
+.add-group,
+.change-group {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    margin-top: 12px;
+}
+
+.ConfirmListCart_Wrap {
+    transform: scale(1) !important;
+}
+
+.ConfirmListCart_main {
+    padding: 30px 32px !important;
+
+}
+
+.input-field {
+    outline: none;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: 1px solid #d6d6d6;
+    padding: 16px 12px 2px;
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    min-width: 400px
+}
+
+.input-field::placeholder {
+    opacity: 0.5;
+}
+
+.add-btn,
+.change-btn {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    font-size: 1.3rem;
+    font-weight: 400;
+    padding: 12px 20px;
+    border-radius: 20px;
+    background-color: rgb(216, 216, 216);
+    box-shadow: 0 2px 4px #cacaca;
+    transition: all 0.3s;
+    margin-right: auto;
+    margin-left: auto;
+    min-width: 70%;
+}
+
+.add-btn:hover,
+.change-btn:hover {
+    background-color: rgb(240, 240, 240);
+    color: #000000;
+}
+
+.reg-btn__close {
+    position: absolute;
+    font-size: 2rem;
+    line-height: 1.2rem;
+    padding: 8px;
+    background-color: white;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    opacity: 0.3;
+    transition: all 0.3s;
+}
+
+.reg-btn__close:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.flex-wrap {
+    display: flex;
+    justify-content: flex-end;
+    align-content: center;
+}
+
+.confirm-btn {
+    background-color: #ffa310;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 3rem;
+    color: white;
+    margin-left: 8px;
+    padding: 0 8px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px #8f8f8f;
+    transition: all 0.2s;
+    border: none;
+}
+
+.confirm-btn:hover {
+    cursor: pointer;
+    background-color: white;
+    color: #ffa310;
+}
+
+#product-list--price {
+    margin-top: 12px;
+    padding-left: 12px;
+    font-size: 1.6rem;
+}
+.import-control {
+    display: flex;
+    align-items: center;      /* căn giữa theo chiều dọc */
+    justify-content: space-between; /* trải đều các nút + input */
+    gap: 12px;                /* khoảng cách giữa các nút */
+    margin-bottom: 12px;
+}
+
+.import-control .btn {
+    background-color: orange;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    flex-shrink: 0;           /* giữ kích thước nút */
+}
+
+#import-list {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#import-list th, #import-list td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+.header {
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 10px 20px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #222;
+}
+
+.header-menu a {
+  text-decoration: none;
+  color: #222;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.header-menu a:hover {
+  color: orange;
+  font-weight: bold;
+}
+
+/* Sidebar */
+.OrderSidebar_Wrap {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+  transition: right 0.3s ease;
+  z-index: 9999;
+}
+
+.OrderSidebar_Wrap.isOpen {
+  right: 0;
+}
+
+.OrderSidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sidebar-header {
+  background: orange;
+  padding: 15px;
+  font-size: 18px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-body {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.close-btn {
+  cursor: pointer;
+  font-size: 22px;
+  font-weight: bold;
+}
+.header-navbar--list {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  position: relative;
+}
+
+.header-tab {
+  cursor: pointer;
+  padding: 8px 12px;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.header-tab:hover {
+  color: orange;
+}
+
+.header-tab.headerActive {
+  color: orange;
+  font-weight: bold;
+}
+
+.line {
+  position: absolute;
+  bottom: 0;
+  height: 3px;
+  background: orange;
+  transition: all 0.3s ease;
+}
+
+/* Container ẩn/hiện */
+.header-content-item {
+  display: none;
+}
+
+.header-content-item.headerActive {
+  display: block;
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+.header-navbar--list {
+    display: flex;
+    position: relative;
+    border-bottom: 2px solid #ddd;
+}
+.header-navbar--item {
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+.header-navbar--item.headerActive {
+    font-weight: bold;
+    color: #007bff;
+}
+.header-navbar--list .line {
+    position: absolute;
+    bottom: 0;
+    height: 3px;
+    background: #007bff;
+    transition: all 0.3s;
+}
+
+.header-navbar--list {
+    display: flex;
+    position: relative;
+    border-bottom: 2px solid #ddd;
+}
+.header-navbar--item {
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+.header-navbar--item.headerActive {
+    font-weight: bold;
+    color: #007bff;
+}
+.header-navbar--list .line {
+    position: absolute;
+    bottom: 0;
+    height: 3px;
+    background: #007bff;
+    transition: all 0.3s;
+}
+
+/* RESET TRIỆT ĐỂ */
+.js-Container {
+    display: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+}
+
+.js-Container.headerActive {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.js-Container .container {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    min-height: 0 !important;
+}
+
+
+
+/* Đảm bảo body không có khoảng trống */
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.main-body {
+    margin: 0;
+    padding: 0;
+}
+
+.js-Container .grid.max-Width {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+@media (max-width: 739px) {
+    .AddProduct_Wrap,
+    .ChangeProduct_Wrap {
+        transform: scale(1);
+    }
+}

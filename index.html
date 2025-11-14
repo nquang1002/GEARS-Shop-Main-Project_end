@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href=" https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="./assets/font/fontawesome-free-5.15.4-web/css/all.min.css"
+    />
+    <link rel="shortcut icon" href="./assets/img/ShortCut_Icon.png" />
+    <link rel="stylesheet" href="./assets/css/Base.css" />
+    <!-- CSS Base -->
+    <link rel="stylesheet" href="./assets/css/Grid.css" />
+    <!-- Grid System -->
+    <link rel="stylesheet" href="./assets/css/Header.css" />
+    <link rel="stylesheet" href="./assets/css/Introduce.css" />
+    <link rel="stylesheet" href="./assets/css/Product.css" />
+    <link rel="stylesheet" href="./assets/css/Cart.css" />
+    <link rel="stylesheet" href="./assets/css/Responsive.css" />
+    <link rel="stylesheet" href="./assets/css/LoginRegister.css" />
+    <link rel="stylesheet" href="./assets/css/Footer.css" />
+    <link rel="stylesheet" href="./assets/css/Toast.css" />
+    <link rel="stylesheet" href="./assets/css/DetailProduct.css" />
+    <link rel="stylesheet" href="./assets/css/ProfileModern.css" />
+    <script src="./assets/scripts/LocalStorage.js"></script>
+    <!-- Tạo LocalStorage cho Web -->
+    <title>GE∆RS</title>
+  </head>
+
+  <body>
+    <div class="DeliveryAddress_Wrap js-delivery-wrap" style="display: none">
+      <div class="DeliveryAddress_main">
+        <div class="DeliveryAddress_header">Xác nhận Địa chỉ Giao hàng</div>
+        <div class="deltail-btn__close js-delivery-close-btn">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="DeliveryAddress_main_form">
+          <div class="form-group">
+            <div class="address-option">
+              <input
+                type="radio"
+                id="defaultAddress"
+                name="deliveryAddress"
+                value="default"
+                checked
+              />
+              <label for="defaultAddress"
+                >Sử dụng địa chỉ mặc định từ tài khoản:</label
+              >
+              <p id="userDefaultAddress" style="padding-left: 20px">
+                [Vui lòng nhập địa chỉ mặc định của người dùng vào đây, nếu có]
+              </p>
+            </div>
+
+            <div class="address-option" style="margin-top: 15px">
+              <input
+                type="radio"
+                id="newAddressOption"
+                name="deliveryAddress"
+                value="new"
+              />
+              <label for="newAddressOption">Nhập địa chỉ giao hàng mới:</label>
+            </div>
+
+            <div
+              id="newAddressForm"
+              style="padding: 10px 0 10px 25px; display: none"
+            >
+              <input
+                type="text"
+                id="newReceiverName"
+                class="input-field"
+                placeholder="Tên người nhận (Bắt buộc)"
+                required
+              />
+              <input
+                type="text"
+                id="newReceiverPhone"
+                class="input-field"
+                placeholder="Số điện thoại (Bắt buộc)"
+                required
+              />
+              <textarea
+                id="newReceiverStreet"
+                class="input-field"
+                placeholder="Địa chỉ chi tiết (Số nhà, đường...)"
+                required
+              ></textarea>
+              <input
+                type="text"
+                id="newReceiverCity"
+                class="input-field"
+                placeholder="Tỉnh/Thành phố (Bắt buộc)"
+                required
+              />
+            </div>
+          </div>
+
+          <button
+            id="confirmCheckoutBtn"
+            class="sumbit-btn"
+            style="margin-top: 20px"
+          >
+            Xác nhận và Đặt hàng
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="main_body">
+      <!-- toast message  -->
+      <div id="toast"></div>
+
+      <!-- Phần Header -->
+      <div class="header js-OpenHeaderForMobile">
+        <div class="grid wide">
+          <div class="header-content">
+            <div class="header-logo">
+              <a href="#" class="header-logo--link">GE∆RS</a>
+            </div>
+            <div class="header-navbar--list">
+              <div class="header-navbar--item js-TabHeader headerActive">
+                Trang chủ
+              </div>
+              <div class="header-navbar--item js-TabHeader">Sản phẩm</div>
+              <div class="header-navbar--item js-TabHeader">Giỏ hàng</div>
+              <!-- Phần tài khoản (sẽ được cập nhật sau khi đăng nhập) -->
+              <div class="header-navbar--item js-HandlerLR is-relatived">
+                <i class="header-user--icon far fa-user"></i>
+                Tài khoản
+              </div>
+              <div class="line"></div>
+            </div>
+            <div class="header-mobile--btn js-mobile-bars">
+              <i class="fas fa-bars"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="OrderReview_Wrap js-order-review-wrap" style="display: none">
+        <div class="OrderReview_main">
+          <div class="OrderReview_header">Chi tiết Đơn hàng đã đặt</div>
+          <div class="deltail-btn__close js-order-review-close-btn">
+            <i class="fas fa-times"></i>
+          </div>
+          <div class="OrderReview_main_content" id="orderReviewContent"></div>
+          <button
+            class="sumbit-btn js-order-review-close-btn"
+            style="margin-top: 20px"
+          >
+            Đóng
+          </button>
+        </div>
+      </div>
+      <!-- Phần Container -->
+      <div class="container">
+        <!-- phần giới thiệu sản phẩm (Trang chủ)  -->
+        <div class="container-Introduce js-Container headerActive">
+          <div class="Introduce-slider"></div>
+          <div class="introduce-content">
+            <h2 class="introduce-title1">
+              GEARS chuyên cung cấp sản phẩm keycaps
+            </h2>
+            <h5 class="introduce-title2">Giá rẻ - Chất lượng - Đáng tin cậy</h5>
+          </div>
+          <div class="product-introduces">
+            <div class="grid wide">
+              <div class="product-introduces--title">Sản phẩm nổi bật</div>
+
+              <div class="product-introduce">
+                <img
+                  class="product-introduce-image"
+                  src="./assets/img/introduce/keycapartisan.jpg"
+                />
+                <div class="product-introduce-content">
+                  <p class="product-introduce--content-title">Keycap Artisan</p>
+                  <p class="product-introduce--content-contents">
+                    <strong>Keycap Artisan</strong> hay còn gọi là keycap nghệ
+                    thuật được làm bởi các nghệ nhân làm keycap. Đặc điểm của
+                    chúng đó là không được sản xuất đại trà. Mỗi một keycap
+                    artisan đều được thiết kế và làm theo một cách riêng biệt.
+                  </p>
+                </div>
+              </div>
+
+              <div class="product-introduce">
+                <div class="product-introduce-content">
+                  <p class="product-introduce--content-title">Keycap Pudding</p>
+                  <p class="product-introduce--content-contents">
+                    <strong>Pudding keycap</strong> là loại phím có thiết kế hai
+                    lớp với phần trên bằng nhựa đục không xuyên LED (opaque
+                    plastic), phần dưới là nhựa trong suốt (translucent plastic)
+                    hoặc trong mờ cho phép ánh sáng xuyên qua, hai lớp này gắn
+                    kết với nhau làm thành một khối nhờ kỹ thuật doubleshot
+                    molding process
+                  </p>
+                </div>
+                <img
+                  class="product-introduce-image"
+                  src="./assets/img/introduce/keycappudding.jpg"
+                />
+              </div>
+
+              <div class="product-introduce">
+                <img
+                  class="product-introduce-image"
+                  src="./assets/img/introduce/keycapanime.jpeg"
+                />
+                <div class="product-introduce-content">
+                  <p class="product-introduce--content-title">Keycap Anime</p>
+                  <p class="product-introduce--content-contents">
+                    <strong>Keycap Anime</strong> là keycap có thiết kế theo chủ
+                    đề Anime, phù hợp cho đam mê của những bạn có sự yêu thích
+                    văn hóa Nhật Bản. Với chất liệu PBT cùng công nghệ in
+                    Dye-sub giúp keycap có vẻ ngoài bắt mắt nhưng bền vững! Bộ
+                    keycap còn hỗ trợ song ngữ Anh - Nhật với profile cherry
+                    giúp cảm giác gõ dễ dàng hơn. Keycap Anime có nhiều phiên
+                    bản: Pokemon, Re-Zero,... và những chủ đề của những bộ Anime
+                    nổi tiếng khác!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- phần bán sản phẩm (Sản Phẩm)  -->
+        <div class="container-Product js-Container">
+          <div class="grid wide">
+            <div class="row sm-gutter">
+              <div class="col l-2 m-0 c-0">
+                <div class="category">
+                  <h3 class="category-header">Tìm kiếm</h3>
+                  <form
+                    class="category-search"
+                    method="get"
+                    onsubmit="return false"
+                  >
+                    <input
+                      type="text"
+                      class="category-search--input"
+                      placeholder="Tìm kiếm"
+                    />
+                    <button
+                      id="search-btn"
+                      type="button"
+                      class="category-search--btn"
+                      maxlength="40"
+                    >
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </form>
+                </div>
+                <div class="category">
+                  <h3 class="category-header">Danh Mục</h3>
+                  <ul class="category-list"></ul>
+                </div>
+              </div>
+
+              <div class="col l-10 m-12 c-12">
+                <!-- search mobile -->
+                <form
+                  class="mobile-search"
+                  method="get"
+                  onsubmit="return false"
+                >
+                  <input
+                    type="text"
+                    class="mobile-search--input"
+                    placeholder="Tìm kiếm"
+                  />
+                  <button
+                    id="search-btn--mobile"
+                    type="button"
+                    class="mobile-search--btn"
+                    maxlength="40"
+                  >
+                    <i class="fas fa-search"></i>
+                  </button>
+                </form>
+                <div class="category">
+                  <h3 class="category-header">Tìm nâng cao</h3>
+                  <form
+                    class="category-search"
+                    method="get"
+                    onsubmit="return false"
+                  >
+                    <!-- Tên sản phẩm -->
+                    <input
+                      type="text"
+                      id="adv-name"
+                      class="category-search--input"
+                      placeholder="Tên sản phẩm..."
+                    />
+
+                    <!-- Phân loại -->
+                    <select id="adv-category" class="category-search--input">
+                      <option value="">Tất cả phân loại</option>
+                      <option value="Other">Other</option>
+                      <option value="Artisan">Artisan</option>
+                      <option value="Pudding">Pudding</option>
+                      <option value="Anime">Anime</option>
+                    </select>
+
+                    <!-- Khoảng giá -->
+                    <div style="display: flex; gap: 6px">
+                      <input
+                        type="number"
+                        id="adv-min"
+                        class="category-search--input"
+                        placeholder="Giá từ"
+                        min="0"
+                      />
+                      <input
+                        type="number"
+                        id="adv-max"
+                        class="category-search--input"
+                        placeholder="Giá đến"
+                        min="0"
+                      />
+                    </div>
+
+                    <!-- Nút tìm -->
+                    <button
+                      id="adv-search-btn"
+                      type="button"
+                      class="category-search--btn"
+                    >
+                      <i class="fas fa-search"></i> Tìm nâng cao
+                    </button>
+                  </form>
+                </div>
+                <!-- category mobile -->
+                <div class="mobile-category">
+                  <ul class="mobile-category-list"></ul>
+                </div>
+
+                <!-- show Product -->
+                <div id="show-Product" class="main-product">
+                  <div id="js-product-list" class="row sm-gutter">
+                    <!-- SẢN PHẨM DEMO TEST POPUP (không có class trigger JS) -->
+                    <div class="col l-2-4 m-4 c-6">
+                      <div
+                        style="
+                          cursor: pointer;
+                          background: white;
+                          border-radius: 4px;
+                          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                          overflow: hidden;
+                          transition: transform 0.2s;
+                        "
+                      >
+                        <div
+                          style="
+                            background: linear-gradient(
+                              135deg,
+                              #667eea 0%,
+                              #764ba2 100%
+                            );
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 200px;
+                          "
+                        >
+                          <i
+                            class="fas fa-keyboard"
+                            style="font-size: 60px; color: white; opacity: 0.8"
+                          ></i>
+                        </div>
+                        <div style="padding: 12px">
+                          <h4
+                            style="
+                              font-size: 1.4rem;
+                              color: #333;
+                              margin: 0 0 8px 0;
+                              min-height: 40px;
+                            "
+                          >
+                            Galaxy Keycap (Demo)
+                          </h4>
+                          <div
+                            style="
+                              display: flex;
+                              align-items: center;
+                              gap: 8px;
+                              margin-bottom: 10px;
+                            "
+                          >
+                            <span
+                              style="
+                                font-size: 1.2rem;
+                                color: #999;
+                                text-decoration: line-through;
+                              "
+                              >999,000đ</span
+                            >
+                            <span
+                              style="
+                                font-size: 1.6rem;
+                                color: #667eea;
+                                font-weight: 700;
+                              "
+                              >689,000đ</span
+                            >
+                          </div>
+                          <a
+                            href="#product-detail-demo"
+                            class="btn btn--primary"
+                            style="
+                              width: 100%;
+                              text-align: center;
+                              padding: 10px;
+                              text-decoration: none;
+                              display: block;
+                            "
+                          >
+                            <i class="fas fa-eye"></i> Xem chi tiết
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <ul
+                    id="page-num"
+                    class="pagination home-product__pagination"
+                  ></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phần giỏ hàng (Giỏ hàng)  -->
+        <div class="container-Cart js-Container">
+          <div class="grid wide">
+            <div class="row sm-gutter">
+              <div class="cart">
+                <!-- Giỏ hàng mẫu có sẵn sản phẩm -->
+                <div class="container__cart-title">Giỏ hàng của tôi</div>
+                <div class="container__cart-wrap">
+                  <ul class="container__cart-listItem">
+                    <li class="container__cart-Item">
+                      <img
+                        src="./assets/img/Products/Other/020.jpg"
+                        class="container__cart-img"
+                      />
+                      <div class="container__cart-Item-Info">
+                        <div class="container__cart-Item-head">
+                          <h5 class="container__cart-Item-name">OSU! keycap</h5>
+                          <div class="container__cart-Item-quantity">
+                            <button class="quantity-btn">-</button>
+                            <span class="quantity-value">1</span>
+                            <button class="quantity-btn">+</button>
+                          </div>
+                          <span class="container__cart-Item-price"
+                            >55.000 ₫</span
+                          >
+                        </div>
+                        <div class="container__cart-Item-body">
+                          <div class="container__cart-Item-desciption">
+                            Phân Loại: Other
+                          </div>
+                          <span class="container__cart-Item-remove">Xóa</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="container__cart-Item">
+                      <img
+                        src="./assets/img/Products/Artisan/002.jpg"
+                        class="container__cart-img"
+                      />
+                      <div class="container__cart-Item-Info">
+                        <div class="container__cart-Item-head">
+                          <h5 class="container__cart-Item-name">
+                            Galaxy Keycap
+                          </h5>
+                          <div class="container__cart-Item-quantity">
+                            <button class="quantity-btn">-</button>
+                            <span class="quantity-value">1</span>
+                            <button class="quantity-btn">+</button>
+                          </div>
+                          <span class="container__cart-Item-price"
+                            >802.118 ₫</span
+                          >
+                        </div>
+                        <div class="container__cart-Item-body">
+                          <div class="container__cart-Item-desciption">
+                            Phân Loại: Artisan
+                          </div>
+                          <span class="container__cart-Item-remove">Xóa</span>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="container__cart-Item">
+                      <img
+                        src="./assets/img/Products/Pudding/011.jpg"
+                        class="container__cart-img"
+                      />
+                      <div class="container__cart-Item-Info">
+                        <div class="container__cart-Item-head">
+                          <h5 class="container__cart-Item-name">
+                            Keycap PBT Pudding Black
+                          </h5>
+                          <div class="container__cart-Item-quantity">
+                            <button class="quantity-btn">-</button>
+                            <span class="quantity-value">2</span>
+                            <button class="quantity-btn">+</button>
+                          </div>
+                          <span class="container__cart-Item-price"
+                            >700.000 ₫</span
+                          >
+                        </div>
+                        <div class="container__cart-Item-body">
+                          <div class="container__cart-Item-desciption">
+                            Phân Loại: Pudding
+                          </div>
+                          <span class="container__cart-Item-remove">Xóa</span>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="cart-summary">
+                  <div class="cart-total">
+                    <strong>Tổng tiền: 1.557.118 ₫</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="cartPayment">
+                <div class="btn-cart">
+                  <a
+                    href="#checkout-popup"
+                    class="btn-Product"
+                    style="
+                      text-decoration: none;
+                      display: block;
+                      text-align: center;
+                    "
+                    >Tiến hành Thanh toán</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Phần Footer -->
+      <div class="footer">
+        <div class="grid wide">
+          <div class="row sm-gutter">
+            <div class="col l-6 m-8 c-12">
+              <h3 class="footer__heading">GEARS Shop</h3>
+              <p class="footer__content">
+                GEARS Shop là cửa hàng chuyên cung cấp keycap giá rẻ và chất
+                lượng tốt, chúng tôi cam kết bán hàng chính hãng, đảm bảo yêu
+                cầu của người tiêu dùng.
+              </p>
+            </div>
+            <div class="col l-2 m-6 c-6">
+              <h3 class="footer__heading">Giới thiệu</h3>
+              <ul class="footer-list">
+                <li class="footer__list-item">
+                  <a href="#" class="footer-item_link">Giới thiệu</a>
+                </li>
+                <li class="footer__list-item">
+                  <a href="#" class="footer-item_link">Điều khoản</a>
+                </li>
+                <li class="footer__list-item">
+                  <a href="#" class="footer-item_link">Tuyển dụng</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col l-2 m-4 c-6">
+              <h3 class="footer__heading">Trợ giúp</h3>
+              <ul class="footer-list">
+                <li class="footer__list-item">
+                  <a href="#" class="footer-item_link">Gear-shop care</a>
+                </li>
+                <li class="footer__list-item">
+                  <a href="#" class="footer-item_link">Trung tâm trợ giúp</a>
+                </li>
+                <li class="footer__list-item">
+                  <a href="#" class="footer-item_link">Hướng dẫn mua hàng </a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col l-2 m-6 c-12">
+              <h3 class="footer__heading">Theo dõi</h3>
+              <ul class="footer-list-icon">
+                <li class="footer__list-item">
+                  <a href="#" class="footer-item_link"
+                    ><i class="footer-item_icon fab fa-facebook"></i>
+                    Facebook
+                  </a>
+                </li>
+                <li class="footer__list-item">
+                  <a href="#" class="footer-item_link"
+                    ><i class="footer-item_icon fab fa-instagram"></i>
+                    Instagram
+                  </a>
+                </li>
+                <li class="footer__list-item">
+                  <a href="#" class="footer-item_link"
+                    ><i class="footer-item_icon fab fa-github"></i>
+                    Github
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <p class="footer__text">© 2025 - Made by GEARS Team with Love .</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form đăng kí - đăng nhập -->
+    <div id="LR-form" class="LR-wrap">
+      <div class="LR-main">
+        <!-- close btn -->
+        <div class="reg-btn__close js-close-btn">
+          <i class="fas fa-times"></i>
+        </div>
+
+        <!-- header-select Login or Register  -->
+        <div class="LR-header">
+          <div class="LR-header--item isActive isHoverBG">Đăng nhập</div>
+          <div class="LR-header--item">Đăng kí</div>
+          <div class="line"></div>
+        </div>
+        <div class="LR-container">
+          <!-- Login  -->
+          <form id="login" class="LR-container--item isActive" method="get">
+            <div class="LR-body">
+              <div class="login-group">
+                <input
+                  id="js-LG_account"
+                  type="text"
+                  class="input-field"
+                  placeholder="Tên Đăng Nhập"
+                  maxlength="24"
+                  required
+                />
+                <input
+                  id="js-LG_password"
+                  type="password"
+                  class="input-field"
+                  placeholder="Mật khẩu"
+                  maxlength="12"
+                  required
+                />
+                <div class="checkbox-form">
+                  <input type="checkbox" class="check-box" /><span
+                    >Ghi nhớ mật khẩu</span
+                  >
+                </div>
+                <button id="js-btn-login" type="button" class="sumbit-btn">
+                  Đăng Nhập
+                </button>
+              </div>
+            </div>
+            <div class="LR-footer">
+              <div class="border-div">
+                <div class="border-line"></div>
+                <div class="border-name">Hoặc</div>
+                <div class="border-line"></div>
+              </div>
+
+              <ul class="supLogin-list">
+                <li class="supLogin--item">
+                  <a class="supLogin--item-link" href="">
+                    <i class="supLogin--icon fab fa-facebook"></i>
+                    Facebook
+                  </a>
+                </li>
+                <li class="supLogin--item">
+                  <a class="supLogin--item-link" href="">
+                    <i class="supLogin--icon fab fa-google"></i>
+                    Google
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </form>
+
+          <!-- Register -->
+          <form id="register" class="LR-container--item" method="get">
+            <div class="LR-body">
+              <div class="login-group">
+                <input
+                  id="js-RG_gmail"
+                  type="email"
+                  class="input-field"
+                  placeholder="Nhập vào gmail"
+                  required
+                />
+                <input
+                  id="js-RG_account"
+                  type="text"
+                  class="input-field"
+                  placeholder="Tên đăng nhập"
+                  maxlength="24"
+                  required
+                />
+                <input
+                  id="js-RG_password"
+                  type="password"
+                  class="input-field"
+                  placeholder="Nhập mật khẩu"
+                  maxlength="12"
+                  required
+                />
+                <input
+                  id="js-RG_RePassword"
+                  type="password"
+                  class="input-field"
+                  placeholder="Nhập lại mật khẩu"
+                  maxlength="12"
+                  required
+                />
+                <div class="checkbox-form">
+                  <input
+                    id="js-RG_radio"
+                    type="checkbox"
+                    class="check-box"
+                  /><span
+                    >Tôi đã đồng ý với <a href="#">điều khoản</a> và
+                    <a href="#">dịch vụ</a>.</span
+                  >
+                </div>
+                <button id="js-btn-register" type="button" class="sumbit-btn">
+                  Đăng Kí
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- form chi tiết sản phẩm  -->
+    <div class="DetailProduct_Wrap">
+      <div class="Detail_Product_main">
+        <div class="Detail_Product_header">Thông tin sản phẩm</div>
+        <div class="deltail-btn__close js-D-close-btn">
+          <i class="fas fa-times"></i>
+        </div>
+        <div class="Detail_Product_main_form"></div>
+      </div>
+    </div>
+
+    <!-- POPUP THANH TOÁN (Thuần HTML/CSS) -->
+    <div id="checkout-popup" class="checkout-popup">
+      <div class="checkout-popup__content">
+        <a href="#" class="checkout-popup__close">×</a>
+        <h2 class="checkout-popup__header">🛒 Xác Nhận Đơn Hàng</h2>
+
+        <div class="checkout-popup__body">
+          <!-- Thông tin giao hàng -->
+          <div class="checkout-popup__section">
+            <label class="checkout-popup__label">Họ và tên người nhận</label>
+            <input
+              type="text"
+              class="checkout-popup__input"
+              placeholder="Nguyễn Văn A"
+              value="Tiến Duy"
+            />
+          </div>
+
+          <div class="checkout-popup__section">
+            <label class="checkout-popup__label">Số điện thoại</label>
+            <input
+              type="tel"
+              class="checkout-popup__input"
+              placeholder="0912345678"
+              value="0901234567"
+            />
+          </div>
+
+          <div class="checkout-popup__section">
+            <label class="checkout-popup__label">Địa chỉ giao hàng</label>
+            <textarea
+              class="checkout-popup__input checkout-popup__textarea"
+              placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành phố"
+            >
+123 Đường Nguyễn Văn Linh, Phường Tân Phú, Quận 7, TP.HCM</textarea
+            >
+          </div>
+
+          <!-- Phương thức thanh toán -->
+          <div class="checkout-popup__section">
+            <label class="checkout-popup__label">Phương thức thanh toán</label>
+            <div class="checkout-popup__radio-group">
+              <label class="checkout-popup__radio-item">
+                <input type="radio" name="payment" checked />
+                <span class="checkout-popup__radio-label"
+                  >💵 Thanh toán khi nhận hàng (COD)</span
+                >
+              </label>
+              <label class="checkout-popup__radio-item">
+                <input type="radio" name="payment" />
+                <span class="checkout-popup__radio-label"
+                  >🏦 Chuyển khoản ngân hàng</span
+                >
+              </label>
+              <label class="checkout-popup__radio-item">
+                <input type="radio" name="payment" />
+                <span class="checkout-popup__radio-label"
+                  >💳 Thẻ tín dụng/Ghi nợ</span
+                >
+              </label>
+            </div>
+          </div>
+
+          <!-- Tóm tắt đơn hàng -->
+          <div class="checkout-popup__summary">
+            <div class="checkout-popup__summary-row">
+              <span>Tạm tính (4 sản phẩm)</span>
+              <span>1.557.118 ₫</span>
+            </div>
+            <div class="checkout-popup__summary-row">
+              <span>Phí vận chuyển</span>
+              <span>30.000 ₫</span>
+            </div>
+            <div class="checkout-popup__summary-row">
+              <span>Giảm giá</span>
+              <span style="color: #28a745">- 50.000 ₫</span>
+            </div>
+            <div class="checkout-popup__summary-total">
+              <span>Tổng cộng</span>
+              <span style="color: #667eea">1.537.118 ₫</span>
+            </div>
+          </div>
+
+          <!-- Nút xác nhận -->
+          <a href="#checkout-success" class="checkout-popup__button">
+            ✅ Xác Nhận Đặt Hàng
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- POPUP THÀNH CÔNG -->
+    <div id="checkout-success" class="checkout-popup">
+      <div class="checkout-popup__content">
+        <a href="#" class="checkout-popup__close">×</a>
+        <div class="checkout-popup__success">
+          <div class="checkout-popup__success-icon">🎉</div>
+          <h3 class="checkout-popup__success-title">Đặt hàng thành công!</h3>
+          <p class="checkout-popup__success-text">
+            Mã đơn hàng của bạn: <strong>#GS2025110801</strong><br />
+            Chúng tôi sẽ liên hệ với bạn trong vòng 24 giờ.<br />
+            Cảm ơn bạn đã tin tưởng GEARS Shop!
+          </p>
+          <a href="#" class="checkout-popup__button"> 🏠 Về Trang Chủ </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- POPUP QUẢN LÝ THÔNG TIN CÁ NHÂN -->
+    <div id="profile-popup" class="profile-popup">
+      <div class="profile-popup__content profile-modern">
+        <!-- Modern Header with Gradient -->
+        <div class="profile-modern-header">
+          <div class="profile-modern-header-bg"></div>
+          <a href="#" class="profile-modern-close">
+            <i class="fas fa-times"></i>
+          </a>
+
+          <div class="profile-modern-avatar-wrapper">
+            <div class="profile-modern-avatar" id="profile-avatar-initials">
+              U
+            </div>
+            <div class="profile-modern-status"></div>
+          </div>
+
+          <h2 class="profile-modern-username" id="profile-display-username">
+            Username
+          </h2>
+          <p class="profile-modern-email" id="profile-display-email">
+            email@example.com
+          </p>
+        </div>
+
+        <!-- Modern Tabs -->
+        <div class="profile-modern-tabs">
+          <a href="#profile-info" id="btn-info" class="profile-modern-tab">
+            <i class="fas fa-user-circle"></i>
+            <span>Hồ Sơ</span>
+          </a>
+          <a href="#profile-edit" id="btn-edit" class="profile-modern-tab">
+            <i class="fas fa-edit"></i>
+            <span>Chỉnh Sửa</span>
+          </a>
+          <a href="#profile-orders" id="btn-orders" class="profile-modern-tab">
+            <i class="fas fa-box"></i>
+            <span>Đơn Hàng</span>
+          </a>
+        </div>
+
+        <!-- Tab 1: Xem Thông Tin -->
+        <div id="profile-info" class="profile-tab-content profile-modern-body">
+          <!-- Info Cards Grid -->
+          <div class="profile-cards-grid">
+            <!-- Card 1: Thông tin cơ bản -->
+            <div class="profile-info-card">
+              <div class="profile-info-card-header">
+                <i class="fas fa-id-card"></i>
+                <h4>Thông Tin Cơ Bản</h4>
+              </div>
+              <div class="profile-info-card-body">
+                <div class="profile-detail-row">
+                  <span class="profile-detail-icon">👤</span>
+                  <div class="profile-detail-content">
+                    <div class="profile-detail-label">Tên đăng nhập</div>
+                    <div
+                      class="profile-detail-value"
+                      id="profile-display-username2"
+                    >
+                      username
+                    </div>
+                  </div>
+                </div>
+                <div class="profile-detail-row">
+                  <span class="profile-detail-icon">✨</span>
+                  <div class="profile-detail-content">
+                    <div class="profile-detail-label">Họ và tên</div>
+                    <div
+                      class="profile-detail-value"
+                      id="profile-display-fullname"
+                    >
+                      Chưa cập nhật
+                    </div>
+                  </div>
+                </div>
+                <div class="profile-detail-row">
+                  <span class="profile-detail-icon">📅</span>
+                  <div class="profile-detail-content">
+                    <div class="profile-detail-label">Ngày đăng ký</div>
+                    <div
+                      class="profile-detail-value"
+                      id="profile-display-registerday"
+                    >
+                      N/A
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: Liên hệ -->
+            <div class="profile-info-card">
+              <div class="profile-info-card-header">
+                <i class="fas fa-address-book"></i>
+                <h4>Thông Tin Liên Hệ</h4>
+              </div>
+              <div class="profile-info-card-body">
+                <div class="profile-detail-row">
+                  <span class="profile-detail-icon">📧</span>
+                  <div class="profile-detail-content">
+                    <div class="profile-detail-label">Email</div>
+                    <div
+                      class="profile-detail-value"
+                      id="profile-display-email2"
+                    >
+                      email@example.com
+                    </div>
+                  </div>
+                </div>
+                <div class="profile-detail-row">
+                  <span class="profile-detail-icon">📱</span>
+                  <div class="profile-detail-content">
+                    <div class="profile-detail-label">Số điện thoại</div>
+                    <div
+                      class="profile-detail-value"
+                      id="profile-display-phone"
+                    >
+                      Chưa cập nhật
+                    </div>
+                  </div>
+                </div>
+                <div class="profile-detail-row">
+                  <span class="profile-detail-icon">📍</span>
+                  <div class="profile-detail-content">
+                    <div class="profile-detail-label">Địa chỉ</div>
+                    <div
+                      class="profile-detail-value"
+                      id="profile-display-address"
+                    >
+                      Chưa cập nhật
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Chỉnh Sửa Thông Tin -->
+        <div id="profile-edit" class="profile-tab-content profile-modern-body">
+          <form id="profile-edit-form" class="profile-modern-form">
+            <!-- Form Card -->
+            <div class="profile-edit-card">
+              <div class="profile-edit-card-header">
+                <i class="fas fa-user-edit"></i>
+                <h4>Cập Nhật Thông Tin</h4>
+              </div>
+
+              <div class="profile-modern-form-group">
+                <label class="profile-modern-label">
+                  <i class="fas fa-user"></i>
+                  Họ và Tên <span class="profile-required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="profile-edit-fullname"
+                  class="profile-modern-input"
+                  placeholder="Nhập họ và tên đầy đủ"
+                  required
+                />
+              </div>
+
+              <div class="profile-modern-form-group">
+                <label class="profile-modern-label">
+                  <i class="fas fa-phone"></i>
+                  Số Điện Thoại <span class="profile-required">*</span>
+                </label>
+                <input
+                  type="tel"
+                  id="profile-edit-phone"
+                  class="profile-modern-input"
+                  placeholder="Nhập số điện thoại (VD: 0901234567)"
+                  required
+                />
+              </div>
+
+              <div class="profile-modern-form-group">
+                <label class="profile-modern-label">
+                  <i class="fas fa-map-marker-alt"></i>
+                  Địa Chỉ
+                </label>
+                <textarea
+                  id="profile-edit-address"
+                  class="profile-modern-input profile-modern-textarea"
+                  placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành"
+                  rows="3"
+                ></textarea>
+              </div>
+
+              <!-- Info Notice -->
+              <div class="profile-notice-box">
+                <i class="fas fa-info-circle"></i>
+                <div>
+                  <strong>Lưu ý:</strong> Email và tên đăng nhập không thể thay
+                  đổi sau khi đăng ký.
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="profile-modern-actions">
+              <button
+                type="button"
+                id="profile-save-btn"
+                class="profile-modern-btn profile-modern-btn-primary"
+              >
+                <i class="fas fa-save"></i>
+                Lưu Thay Đổi
+              </button>
+              <a
+                href="#profile-info"
+                class="profile-modern-btn profile-modern-btn-secondary"
+              >
+                <i class="fas fa-times"></i>
+                Hủy Bỏ
+              </a>
+            </div>
+          </form>
+        </div>
+
+        <!-- Tab 3: Lịch Sử Đơn Hàng -->
+        <div
+          id="profile-orders"
+          class="profile-tab-content profile-modern-body"
+        >
+          <div
+            class="profile-orders-header"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              margin-bottom: 16px;
+              position: relative;
+              z-index: 1;
+              background: #fff;
+            "
+          >
+            <div
+              class="profile-orders-icon"
+              style="font-size: 24px; color: #fff"
+            >
+              <i class="fas fa-box-open"></i>
+            </div>
+            <div>
+              <h3 style="margin: 0; font-size: 1.2rem">Lịch Sử Đơn Hàng</h3>
+              <p style="margin: 4px 0 0; color: #666">
+                Theo dõi tất cả đơn hàng của bạn
+              </p>
+            </div>
+          </div>
+
+          <div id="profile-order-list" style="overflow-y: auto">
+            <!-- Đơn hàng mới nhất -->
+            <div
+              class="profile-order-item"
+              style="
+                padding: 8px 12px;
+                margin-bottom: 12px;
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+              "
+            >
+              <div style="display: flex; gap: 8px; margin-bottom: 8px">
+                <img
+                  src="./assets/img/Products/Other/020.jpg"
+                  style="
+                    width: 40px;
+                    height: 40px;
+                    object-fit: cover;
+                    border-radius: 4px;
+                  "
+                  alt="OSU! keycap"
+                />
+                <img
+                  src="./assets/img/Products/Artisan/002.jpg"
+                  style="
+                    width: 40px;
+                    height: 40px;
+                    object-fit: cover;
+                    border-radius: 4px;
+                  "
+                  alt="Galaxy Keycap"
+                />
+                <img
+                  src="./assets/img/Products/Pudding/011.jpg"
+                  style="
+                    width: 40px;
+                    height: 40px;
+                    object-fit: cover;
+                    border-radius: 4px;
+                  "
+                  alt="Keycap PBT Pudding Black"
+                />
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <div>
+                  <div style="font-weight: 600; font-size: 0.9rem">
+                    #GS202511080101
+                  </div>
+                  <div style="color: #666; font-size: 0.85rem">
+                    15/11/2023 • 3 sản phẩm
+                  </div>
+                </div>
+                <div style="text-align: right">
+                  <div style="font-size: 0.9rem">
+                    Tổng: <strong>1.557.118 ₫</strong>
+                  </div>
+                  <div style="color: #28a745; font-size: 0.85rem">Đã giao</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Đơn hàng thứ 2 -->
+            <div
+              class="profile-order-item"
+              style="
+                padding: 8px 12px;
+                margin-bottom: 12px;
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+              "
+            >
+              <div style="display: flex; gap: 8px; margin-bottom: 8px">
+                <img
+                  src="./assets/img/Products/Other/020.jpg"
+                  style="
+                    width: 40px;
+                    height: 40px;
+                    object-fit: cover;
+                    border-radius: 4px;
+                  "
+                  alt="OSU! keycap"
+                />
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <div>
+                  <div style="font-weight: 600; font-size: 0.9rem">
+                    #GS202510250201
+                  </div>
+                  <div style="color: #666; font-size: 0.85rem">
+                    25/10/2023 • 1 sản phẩm
+                  </div>
+                </div>
+                <div style="text-align: right">
+                  <div style="font-size: 0.9rem">
+                    Tổng: <strong>55.000 ₫</strong>
+                  </div>
+                  <div style="color: #28a745; font-size: 0.85rem">
+                    Đang giao
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Đơn hàng thứ 3 -->
+            <div
+              class="profile-order-item"
+              style="
+                padding: 8px 12px;
+                margin-bottom: 12px;
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+              "
+            >
+              <div style="display: flex; gap: 8px; margin-bottom: 8px">
+                <img
+                  src="./assets/img/Products/Artisan/002.jpg"
+                  style="
+                    width: 40px;
+                    height: 40px;
+                    object-fit: cover;
+                    border-radius: 4px;
+                  "
+                  alt="Galaxy Keycap"
+                />
+                <img
+                  src="./assets/img/Products/Pudding/011.jpg"
+                  style="
+                    width: 40px;
+                    height: 40px;
+                    object-fit: cover;
+                    border-radius: 4px;
+                  "
+                  alt="Keycap PBT Pudding Black"
+                />
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <div>
+                  <div style="font-weight: 600; font-size: 0.9rem">
+                    #GS202509150301
+                  </div>
+                  <div style="color: #666; font-size: 0.85rem">
+                    15/09/2023 • 2 sản phẩm
+                  </div>
+                </div>
+                <div style="text-align: right">
+                  <div style="font-size: 0.9rem">
+                    Tổng: <strong>1.502.118 ₫</strong>
+                  </div>
+                  <div style="color: #28a745; font-size: 0.85rem">
+                    Hoàn thành
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POPUP LƯU THÀNH CÔNG -->
+    <div id="profile-save-success" class="checkout-popup">
+      <div class="checkout-popup__content">
+        <a href="#profile-info" class="checkout-popup__close">×</a>
+        <div class="checkout-popup__success">
+          <div class="checkout-popup__success-icon">✅</div>
+          <h3 class="checkout-popup__success-title">Lưu thành công!</h3>
+          <p class="checkout-popup__success-text">
+            Thông tin cá nhân của bạn đã được cập nhật.<br />
+            Các thay đổi sẽ được áp dụng ngay lập tức.
+          </p>
+          <a href="#profile-info" class="checkout-popup__button">
+            👤 Quay Về Hồ Sơ
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- POPUP CHI TIẾT SẢN PHẨM (Demo - HTML tĩnh) -->
+    <div id="product-detail-demo" class="product-detail-popup">
+      <div class="product-detail-content">
+        <a href="#" class="product-detail-close">×</a>
+
+        <div class="product-detail-grid">
+          <!-- Cột trái: Hình ảnh -->
+          <div class="product-detail-images">
+            <div class="product-detail-main-image">
+              <img
+                src="./assets/img/Products/Artisan/001.jpg"
+                alt="Galaxy Keycap"
+                id="main-product-image"
+              />
+            </div>
+            <div class="product-detail-thumbnails">
+              <div
+                class="product-thumb active"
+                onclick="document.getElementById('main-product-image').src='./assets/img/Products/Artisan/001.jpg'"
+              >
+                <img src="./assets/img/Products/Artisan/001.jpg" alt="View 1" />
+              </div>
+              <div
+                class="product-thumb"
+                onclick="document.getElementById('main-product-image').src='./assets/img/Products/Artisan/002.jpg'"
+              >
+                <img src="./assets/img/Products/Artisan/002.jpg" alt="View 2" />
+              </div>
+              <div
+                class="product-thumb"
+                onclick="document.getElementById('main-product-image').src='./assets/img/Products/Artisan/003.jpg'"
+              >
+                <img src="./assets/img/Products/Artisan/003.jpg" alt="View 3" />
+              </div>
+              <div
+                class="product-thumb"
+                onclick="document.getElementById('main-product-image').src='./assets/img/Products/Artisan/004.jpg'"
+              >
+                <img src="./assets/img/Products/Artisan/004.jpg" alt="View 4" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Cột phải: Thông tin -->
+          <div class="product-detail-info">
+            <div class="product-detail-badge">Artisan Keycap</div>
+            <h2 class="product-detail-title">Galaxy Keycap</h2>
+
+            <div class="product-detail-rating">
+              <div class="product-stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <span class="product-rating-text">(4.5/5 - 128 đánh giá)</span>
+            </div>
+
+            <div class="product-detail-price">
+              <span class="product-current-price">802.118 ₫</span>
+              <span class="product-original-price">1.200.000 ₫</span>
+              <span class="product-discount-badge">-33%</span>
+            </div>
+
+            <div class="product-detail-stock">
+              <i class="fas fa-check-circle"></i>
+              <span>Còn hàng - Sẵn sàng giao</span>
+            </div>
+
+            <div class="product-detail-description">
+              <h4><i class="fas fa-info-circle"></i> Mô tả sản phẩm</h4>
+              <p>
+                Galaxy Keycap là một tác phẩm nghệ thuật thu nhỏ, được chế tác
+                thủ công với resin trong suốt và các sắc màu tuyệt đẹp mô phỏng
+                dải ngân hà. Mỗi keycap là duy nhất với các hiệu ứng ánh sáng
+                lung linh khi nhìn từ nhiều góc độ khác nhau.
+              </p>
+
+              <div class="product-features">
+                <div class="product-feature-item">
+                  <i class="fas fa-layer-group"></i>
+                  <span>Chất liệu: Resin cao cấp</span>
+                </div>
+                <div class="product-feature-item">
+                  <i class="fas fa-palette"></i>
+                  <span>Màu sắc: Tím xanh galaxy</span>
+                </div>
+                <div class="product-feature-item">
+                  <i class="fas fa-ruler"></i>
+                  <span>Kích thước: R4 (ESC key)</span>
+                </div>
+                <div class="product-feature-item">
+                  <i class="fas fa-puzzle-piece"></i>
+                  <span>Tương thích: Cherry MX</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="product-detail-quantity">
+              <label>Số lượng:</label>
+              <div class="product-quantity-control">
+                <button class="qty-btn">-</button>
+                <input
+                  type="number"
+                  value="1"
+                  min="1"
+                  max="99"
+                  class="qty-input"
+                />
+                <button class="qty-btn">+</button>
+              </div>
+            </div>
+
+            <div class="product-detail-actions">
+              <button class="product-btn product-btn-cart">
+                <i class="fas fa-shopping-cart"></i>
+                Thêm vào giỏ hàng
+              </button>
+              <button class="product-btn product-btn-buy">
+                <i class="fas fa-bolt"></i>
+                Mua ngay
+              </button>
+              <button class="product-btn product-btn-favorite">
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+
+            <div class="product-detail-policies">
+              <div class="policy-item">
+                <i class="fas fa-shipping-fast"></i>
+                <span>Miễn phí vận chuyển cho đơn hàng trên 500k</span>
+              </div>
+              <div class="policy-item">
+                <i class="fas fa-shield-alt"></i>
+                <span>Bảo hành 12 tháng</span>
+              </div>
+              <div class="policy-item">
+                <i class="fas fa-undo"></i>
+                <span>Đổi trả trong 7 ngày</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./assets/scripts/EventHandler.js"></script>
+    <script src="./assets/scripts/Products.js"></script>
+    <script src="./assets/scripts/Cart.js"></script>
+    <script src="./assets/scripts/LoginRegister.js"></script>
+
+    <!-- Script cho popup chi tiết sản phẩm + render lịch sử đơn hàng -->
+    <script>
+      // Xử lý click thumbnail để đổi ảnh chính
+      document.querySelectorAll(".product-thumb").forEach((thumb) => {
+        thumb.addEventListener("click", function () {
+          // Xóa class active khỏi tất cả thumbnails
+          document
+            .querySelectorAll(".product-thumb")
+            .forEach((t) => t.classList.remove("active"));
+          // Thêm class active vào thumbnail được click
+          this.classList.add("active");
+        });
+      });
+
+      // Simple hardcoded order detail handler
+      function showOrderDetail(index) {
+        var orders = [
+          {
+            id: "#GS202511080101",
+            date: "15/11/2023",
+            items: [
+              {
+                name: "OSU! keycap",
+                qty: 1,
+                price: 55000,
+                img: "./assets/img/Products/Other/020.jpg",
+              },
+              {
+                name: "Galaxy Keycap",
+                qty: 1,
+                price: 802118,
+                img: "./assets/img/Products/Artisan/002.jpg",
+              },
+              {
+                name: "Keycap PBT Pudding Black",
+                qty: 2,
+                price: 700000,
+                img: "./assets/img/Products/Pudding/011.jpg",
+              },
+            ],
+            total: 1557118,
+            status: "Đã giao",
+          },
+          {
+            id: "#GS202510250201",
+            date: "25/10/2023",
+            items: [
+              {
+                name: "OSU! keycap",
+                qty: 1,
+                price: 55000,
+                img: "./assets/img/Products/Other/020.jpg",
+              },
+            ],
+            total: 55000,
+            status: "Đang giao",
+          },
+          {
+            id: "#GS202509150301",
+            date: "15/09/2023",
+            items: [
+              {
+                name: "Galaxy Keycap",
+                qty: 1,
+                price: 802118,
+                img: "./assets/img/Products/Artisan/002.jpg",
+              },
+              {
+                name: "Keycap PBT Pudding Black",
+                qty: 2,
+                price: 700000,
+                img: "./assets/img/Products/Pudding/011.jpg",
+              },
+            ],
+            total: 1502118,
+            status: "Hoàn thành",
+          },
+        ];
+
+        var order = orders[index];
+        var content = document.getElementById("orderReviewContent");
+        if (content && order) {
+          content.innerHTML = `
+            <div style="padding:8px">
+              <h4 style="margin:6px 0">Đơn hàng ${order.id}</h4>
+              <div style="color:#666;margin-bottom:8px">Ngày: ${
+                order.date
+              }</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                ${order.items
+                  .map(
+                    (item) => `
+                  <div style="display:flex;gap:10px;align-items:center">
+                    <img src="${
+                      item.img
+                    }" style="width:64px;height:64px;object-fit:cover;border-radius:6px;border:1px solid #eee">
+                    <div style="flex-grow:1">
+                      <div style="font-weight:500">${item.name}</div>
+                      <div style="color:#666;font-size:0.85rem">Số lượng: ${
+                        item.qty
+                      }</div>
+                    </div>
+                    <div style="font-weight:600;color:#667eea">${item.price.toLocaleString()} ₫</div>
+                  </div>
+                `
+                  )
+                  .join("")}
+              </div>
+              <div style="border-top:1px solid #eee; margin-top:8px; padding-top:8px">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px">
+                  <div style="color:#666">Tổng cộng:</div>
+                  <div style="font-weight:600; color:#667eea">${order.total.toLocaleString()} ₫</div>
+                </div>
+                <div style="text-align:center">
+                  <button class="sumbit-btn" style="width:100%; max-width:300px">
+                    <i class="fas fa-print"></i> In hóa đơn
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      // Demo open order detail popup
+      document.querySelectorAll(".js-order-review-close-btn").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          var index = 0; // Change this index to test different orders
+          showOrderDetail(index);
+          document.querySelector(".OrderReview_Wrap").style.display = "block";
+        });
+      });
+    </script>
+    <script>
+      // Ẩn tất cả tab
+      function hideAllTabs() {
+        document.getElementById("profile-info").style.display = "none";
+        document.getElementById("profile-edit").style.display = "none";
+        document.getElementById("profile-orders").style.display = "none";
+      }
+
+      // Hiện tab theo id
+      function showTab(tabId) {
+        hideAllTabs();
+        document.getElementById(tabId).style.display = "block";
+      }
+
+      // Gắn sự kiện cho các nút
+      document.addEventListener("DOMContentLoaded", function () {
+        // Ẩn 2 tab còn lại, chỉ hiện tab info ban đầu
+        hideAllTabs();
+        document.getElementById("profile-info").style.display = "block";
+
+        // Nếu bạn có nút ở menu hoặc link có id:
+        // btn-info, btn-edit, btn-orders
+        const btnInfo = document.getElementById("btn-info");
+        const btnEdit = document.getElementById("btn-edit");
+        const btnOrders = document.getElementById("btn-orders");
+
+        if (btnInfo)
+          btnInfo.addEventListener("click", function (e) {
+            e.preventDefault();
+            showTab("profile-info");
+          });
+
+        if (btnEdit)
+          btnEdit.addEventListener("click", function (e) {
+            e.preventDefault();
+            showTab("profile-edit");
+          });
+
+        if (btnOrders)
+          btnOrders.addEventListener("click", function (e) {
+            e.preventDefault();
+            showTab("profile-orders");
+          });
+      });
+    </script>
+
+    <script>
+      // Xử lý sự kiện cho các nút trong popup chi tiết sản phẩm
+      document.addEventListener("DOMContentLoaded", function () {
+        // Nút "Thêm vào giỏ hàng"
+        const addToCartBtn = document.querySelector(".product-btn-cart");
+        if (addToCartBtn) {
+          addToCartBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            addToCartFromPopup();
+          });
+        }
+
+        // Nút "Mua ngay" - CHỈ CHUYỂN ĐẾN TRANG THANH TOÁN
+        const buyNowBtn = document.querySelector(".product-btn-buy");
+        if (buyNowBtn) {
+          buyNowBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            buyNowFromPopup();
+          });
+        }
+
+        // Nút "Tiến hành Thanh toán" - MỞ POPUP THANH TOÁN
+        const checkoutBtn = document.querySelector(".btn-Product");
+        if (checkoutBtn) {
+          checkoutBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            // Mở popup thanh toán
+            window.location.hash = "checkout-popup";
+          });
+        }
+
+        // Nút đóng popup chi tiết sản phẩm
+        const closeDetailBtn = document.querySelector(".product-detail-close");
+        if (closeDetailBtn) {
+          closeDetailBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            window.location.hash = "";
+            document.querySelector(".product-detail-popup").style.display =
+              "none";
+          });
+        }
+
+        // Đóng popup khi click ra ngoài
+        document
+          .querySelector(".product-detail-popup")
+          ?.addEventListener("click", function (e) {
+            if (e.target === this) {
+              window.location.hash = "";
+              this.style.display = "none";
+            }
+          });
+      });
+
+      // Hàm xử lý thêm vào giỏ hàng từ popup
+      function addToCartFromPopup() {
+        const productName = document.querySelector(
+          ".product-detail-title"
+        ).textContent;
+
+        // Kiểm tra đăng nhập
+        const isLoggedIn = document
+          .querySelector(".js-HandlerLR")
+          ?.classList.contains("js-isLogin");
+        if (!isLoggedIn) {
+          alert(
+            "Hãy đăng nhập để có thể mua sắm\nNếu bạn chưa có tài khoản thì hãy nhanh tay tạo cho mình một tài khoản đi nào."
+          );
+          return;
+        }
+
+        // Lấy số lượng
+        const quantity =
+          parseInt(document.querySelector(".qty-input").value) || 1;
+
+        // Tìm sản phẩm trong danh sách
+        const productList = JSON.parse(localStorage.getItem("product")) || [];
+        const product = productList.find((p) => p.name === productName);
+
+        if (!product) {
+          alert("Không tìm thấy thông tin sản phẩm!");
+          return;
+        }
+
+        // Thêm vào giỏ hàng
+        let tempArray = JSON.parse(localStorage.getItem("tempCart")) || [];
+        const existingItem = tempArray.find(
+          (item) => item.name === product.name
+        );
+
+        if (existingItem) {
+          existingItem.quantity += quantity;
+        } else {
+          const tempCart = {
+            id: product.id,
+            type: product.type,
+            name: product.name,
+            img: product.img,
+            price: product.price,
+            quantity: quantity,
+          };
+          tempArray.push(tempCart);
+        }
+
+        // Lưu vào localStorage
+        localStorage.setItem("tempCart", JSON.stringify(tempArray));
+
+        // Hiển thị thông báo thành công
+        alert(`Đã thêm ${quantity} "${productName}" vào giỏ hàng thành công!`);
+      }
+
+      // Hàm xử lý mua ngay từ popup - CHỈ CHUYỂN ĐẾN TRANG THANH TOÁN
+      function buyNowFromPopup() {
+        const productName = document.querySelector(
+          ".product-detail-title"
+        ).textContent;
+
+        // Kiểm tra đăng nhập
+        const isLoggedIn = document
+          .querySelector(".js-HandlerLR")
+          ?.classList.contains("js-isLogin");
+        if (!isLoggedIn) {
+          alert(
+            "Hãy đăng nhập để có thể mua sắm\nNếu bạn chưa có tài khoản thì hãy nhanh tay tạo cho mình một tài khoản đi nào."
+          );
+          return;
+        }
+
+        // Lấy số lượng
+        const quantity =
+          parseInt(document.querySelector(".qty-input").value) || 1;
+
+        // Tìm sản phẩm trong danh sách
+        const productList = JSON.parse(localStorage.getItem("product")) || [];
+        const product = productList.find((p) => p.name === productName);
+
+        if (!product) {
+          alert("Không tìm thấy thông tin sản phẩm!");
+          return;
+        }
+
+        // Tạo giỏ hàng tạm thời chỉ với sản phẩm này
+        const tempArray = [
+          {
+            id: product.id,
+            type: product.type,
+            name: product.name,
+            img: product.img,
+            price: product.price,
+            quantity: quantity,
+          },
+        ];
+
+        // Lưu vào localStorage
+        localStorage.setItem("tempCart", JSON.stringify(tempArray));
+
+        // ĐÓNG POPUP CHI TIẾT SẢN PHẨM TRƯỚC KHI CHUYỂN TRANG
+        window.location.hash = ""; // Xóa hash để đóng popup
+        document.querySelector(".product-detail-popup").style.display = "none";
+
+        // Hiển thị thông báo và chuyển đến trang thanh toán
+        alert(
+          `Đã thêm ${quantity} "${productName}" vào giỏ hàng! Chuyển đến trang thanh toán...`
+        );
+
+        // Chuyển đến tab giỏ hàng (KHÔNG mở popup thanh toán)
+        setTimeout(() => {
+          // Chuyển đến tab giỏ hàng
+          const cartTab = document.querySelectorAll(".js-TabHeader")[2];
+          if (cartTab) {
+            cartTab.click();
+
+            // Cuộn đến phần thanh toán sau khi chuyển tab
+            setTimeout(() => {
+              const checkoutSection = document.querySelector(".cartPayment");
+              if (checkoutSection) {
+                checkoutSection.scrollIntoView({
+                  behavior: "smooth",
+                  block: "center",
+                });
+              }
+            }, 300);
+          }
+        }, 500);
+      }
+
+      // Xử lý sự kiện khi hash thay đổi (khi mở popup thanh toán)
+      window.addEventListener("hashchange", function () {
+        if (window.location.hash === "#checkout-popup") {
+          console.log("Mở popup thanh toán");
+          // Có thể thêm logic xử lý thanh toán ở đây
+        }
+
+        if (window.location.hash === "#checkout-success") {
+          console.log("Thanh toán thành công");
+          // Có thể thêm logic xử lý sau thanh toán thành công ở đây
+        }
+      });
+    </script>
+    <script></script>
+  </body>
+</html>

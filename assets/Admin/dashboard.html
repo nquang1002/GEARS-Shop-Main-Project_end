@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="shortcut icon" href="../img/ShortCut_Icon.png">
+    <link rel="stylesheet" href="../css/Base.css">
+    <link rel="stylesheet" href="../css/Grid.css">
+    <link rel="stylesheet" href="../css/Responsive.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Admin Dashboard - GEARS Shop</title>
+</head>
+<body>
+    <div class="main-body">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-navbar--list">
+                <div class="header-navbar--item headerActive">
+                    <a href="dashboard.html" style="color: inherit; text-decoration: none;">Trang chủ</a>
+                </div>
+                <div class="header-navbar--item">
+                    <a href="customers.html" style="color: inherit; text-decoration: none;">Quản lý khách hàng</a>
+                </div>
+                <div class="header-navbar--item">
+                    <a href="products.html" style="color: inherit; text-decoration: none;">Quản lý sản phẩm</a>
+                </div>
+                <div class="header-navbar--item">
+                    <a href="orders.html" style="color: inherit; text-decoration: none;">Quản lý đơn hàng</a>
+                </div>
+                <div class="line"></div>
+            </div>
+        </div>
+
+        <!-- Container -->
+        <div class="container">
+            <div class="grid max-Width">
+                <div class="row sm-gutter">
+                    <div class="col l-12 m-12 c-12">
+                        <div class="container-main">
+                            <div class="container-title">Thống kê tổng quan</div>
+                            <div class="dashboard-stats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 20px;">
+                                <div class="stat-card" style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    <h3 style="margin: 0 0 10px 0; color: #666;">Tổng khách hàng</h3>
+                                    <p id="total-customers" style="font-size: 32px; font-weight: bold; margin: 0; color: #4CAF50;">0</p>
+                                </div>
+                                <div class="stat-card" style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    <h3 style="margin: 0 0 10px 0; color: #666;">Tổng sản phẩm</h3>
+                                    <p id="total-products" style="font-size: 32px; font-weight: bold; margin: 0; color: #2196F3;">0</p>
+                                </div>
+                                <div class="stat-card" style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    <h3 style="margin: 0 0 10px 0; color: #666;">Tổng đơn hàng</h3>
+                                    <p id="total-orders" style="font-size: 32px; font-weight: bold; margin: 0; color: #FF9800;">0</p>
+                                </div>
+                                <div class="stat-card" style="background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    <h3 style="margin: 0 0 10px 0; color: #666;">Doanh thu</h3>
+                                    <p id="total-revenue" style="font-size: 32px; font-weight: bold; margin: 0; color: #9C27B0;">0 đ</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./script/admin-common.js"></script>
+    <script src="./script/dashboard.js"></script>
+</body>
+</html>

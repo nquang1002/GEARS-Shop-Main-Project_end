@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="shortcut icon" href="../img/ShortCut_Icon.png">
+    <link rel="stylesheet" href="../css/Base.css">
+    <link rel="stylesheet" href="../css/Grid.css">
+    <link rel="stylesheet" href="../css/Responsive.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Quản lý Sản phẩm - GEARS Shop</title>
+</head>
+<body>
+    <div class="main-body">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-navbar--list">
+                <div class="header-navbar--item">
+                    <a href="dashboard.html" style="color: inherit; text-decoration: none;">Trang chủ</a>
+                </div>
+                <div class="header-navbar--item">
+                    <a href="customers.html" style="color: inherit; text-decoration: none;">Quản lý khách hàng</a>
+                </div>
+                <div class="header-navbar--item headerActive">
+                    <a href="products.html" style="color: inherit; text-decoration: none;">Quản lý sản phẩm</a>
+                </div>
+                <div class="header-navbar--item">
+                    <a href="orders.html" style="color: inherit; text-decoration: none;">Quản lý đơn hàng</a>
+                </div>
+                <div class="line"></div>
+            </div>
+        </div>
+
+        <!-- Container -->
+        <div class="container">
+            <div class="grid max-Width">
+                <div class="row sm-gutter">
+                    <div class="col l-12 m-12 c-12">
+                        <div class="container-main">
+                            <div class="container-title">Quản lý Sản phẩm</div>
+                            
+                            <!-- Thanh tìm kiếm và lọc -->
+                            <div class="search-bar" style="margin-bottom: 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                                <input type="text" id="search-product" placeholder="Tìm kiếm sản phẩm..." 
+                                    class="input-field" style="flex: 1; max-width: 300px;">
+                                <select id="filter-category" class="input-field" style="width: 150px;">
+                                    <option value="">Tất cả danh mục</option>
+                                </select>
+                                <input type="number" id="filter-min-price" placeholder="Giá từ..." 
+                                    class="input-field" style="width: 120px;">
+                                <input type="number" id="filter-max-price" placeholder="Giá đến..." 
+                                    class="input-field" style="width: 120px;">
+                                <button id="btn-search-product" class="confirm-btn">Tìm kiếm</button>
+                                <button id="btn-reset-filter" class="confirm-btn" style="background: #999;">Reset</button>
+                            </div>
+
+                            <!-- Bảng danh sách -->
+                            <div class="container-table" style="max-height: 55vh;">
+                                <table id="product-list"></table>
+                            </div>
+
+                            <!-- Nút chức năng -->
+                            <div class="btn_Admin" style="display:flex;justify-content:space-between;align-items:center;gap:12px; margin-top: 15px;">
+                                <div class="btn-left" style="display:flex;gap:8px;">
+                                    <div class="btn-Product js-editTypeProduct">Sửa thể loại</div>
+                                    <div class="btn-Product js-delTypeProduct">Xóa thể loại</div>
+                                </div>
+                                <div class="btn-right" style="display:flex;gap:8px;">
+                                    <div class="btn-Product js-addTypeProduct">Thêm thể loại</div>
+                                    <div class="btn-Product js-addProduct">Thêm sản phẩm</div>
+                                </div>
+                            </div>
+
+                            <!-- Phân trang -->
+                            <div class="pagination" id="pagination-products" style="display: flex; justify-content: center; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
+                            </div>
+
+                            <!-- Thông tin trang -->
+                            <div class="page-info" style="text-align: center; margin-top: 10px; color: #666;">
+                                Hiển thị <span id="showing-start">0</span> - <span id="showing-end">0</span> 
+                                trong tổng số <span id="total-products">0</span> sản phẩm
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form thêm sản phẩm -->
+    <div class="AddProduct_Wrap">
+        <div class="Add_Product_main">
+            <div class="Add_Product_header">Thêm sản phẩm</div>
+            <div class="reg-btn__close js-close-btn">
+                <i class="fas fa-times"></i>
+            </div>
+
+            <form id="addProduct" class="AP-container--item" method="get">
+                <div class="AP-body">
+                    <div class="add-group">
+                        <input id="js-item-name" type="text" class="input-field" placeholder="Nhập vào tên sản phẩm" required>
+                        <input id="js-item-price" type="number" class="input-field" placeholder="Nhập vào giá sản phẩm (VNĐ)" required>
+                        <select id="AddOption" class="input-field js-addOption" name="option"></select>
+                        <input type="file" id="js-item-image" class="input-field" accept="image/*" required>
+                        <button id="js-btn-product" type="button" class="add-btn">Thêm</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Form sửa sản phẩm -->
+    <div class="ChangeProduct_Wrap">
+        <div class="Add_Product_main">
+            <div class="Add_Product_header">Sửa sản phẩm</div>
+            <div class="reg-btn__close js-close-btn2">
+                <i class="fas fa-times"></i>
+            </div>
+
+            <form id="changeProduct" class="AP-container--item" method="get">
+                <div class="AP-body">
+                    <div class="add-group">
+                        <input id="js-change-item-id" type="hidden">
+                        <input id="js-change-item-name" type="text" class="input-field" placeholder="Tên sản phẩm" required>
+                        <input id="js-change-item-price" type="number" class="input-field" placeholder="Giá sản phẩm (VNĐ)" required>
+                        <select id="AddOptionC" class="input-field" name="option"></select>
+                        <div style="margin: 10px 0;">
+                            <img id="current-image-preview" src="" alt="Ảnh hiện tại" style="max-width: 200px; display: none;">
+                        </div>
+                        <input type="file" id="js-change-item-image" class="input-field" accept="image/*">
+                        <small style="color: #666;">Để trống nếu không muốn đổi ảnh</small>
+                        <button id="js-btn-change-product" type="button" class="add-btn">Cập nhật</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Form thêm thể loại -->
+    <div class="AddTypeProduct_Wrap">
+        <div class="Add_Product_main">
+            <div class="Add_Product_header">Thêm thể loại sản phẩm</div>
+            <div class="reg-btn__close js-close-btn4">
+                <i class="fas fa-times"></i>
+            </div>
+            <form id="addTypeProduct" class="AP-container--item" method="get">
+                <div class="AP-body">
+                    <div class="add-group">
+                        <input id="js-Type--id" type="text" class="input-field" placeholder="Nhập ID thể loại (VD: Gaming)" required>
+                        <input id="js-Type--name" type="text" class="input-field" placeholder="Nhập tên thể loại (VD: Gaming Keycap)" required>
+                        <button id="js-btn-product--typpe" type="button" class="add-btn">Thêm</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Form sửa thể loại -->
+    <div class="EditTypeProduct_Wrap">
+        <div class="Add_Product_main">
+            <div class="Add_Product_header">Sửa thể loại sản phẩm</div>
+            <div class="reg-btn__close js-close-btn-edit">
+                <i class="fas fa-times"></i>
+            </div>
+            <form id="editTypeProduct" class="AP-container--item" method="get">
+                <div class="AP-body">
+                    <div class="add-group">
+                        <select id="js-edit-Type--id" class="input-field"></select>
+                        <input id="js-edit-Type--name" type="text" class="input-field" placeholder="Nhập tên mới" required>
+                        <button id="js-btn-product--typpe-edit" type="button" class="add-btn">Cập nhật</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Form xóa thể loại -->
+    <div class="DelTypeProduct_Wrap">
+        <div class="Add_Product_main">
+            <div class="Add_Product_header">Xóa thể loại sản phẩm</div>
+            <div class="reg-btn__close js-close-btn-del">
+                <i class="fas fa-times"></i>
+            </div>
+            <form id="delTypeProduct" class="AP-container--item" method="get">
+                <div class="AP-body">
+                    <div class="add-group">
+                        <select id="js-delete-Type--id" class="input-field"></select>
+                        <button id="js-btn-product--typpe-del" type="button" class="add-btn">Xóa</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="./script/admin-common.js"></script>
+    <script src="./script/products-admin.js"></script>
+</body>
+</html>
